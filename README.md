@@ -120,10 +120,14 @@ shasum -a 256 a2b-attack-check/* ai-created-check/*
 
 The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change.
 
-## Adding a skill
+## Contributing
 
-1. Create a folder named after the skill (lowercase, hyphens).
-2. Add `SKILL.md` with `name` and `description` frontmatter.
-3. Put supporting files (reference docs, scripts, templates) in the same folder.
-4. Add a row to the Skills table above.
-5. If the skill writes a report file, add its pattern to `.gitignore` and to the Report files section.
+To add or change a skill, see [CONTRIBUTING.md](CONTRIBUTING.md) for the skill layout, the testing process, and the pull request checklist. All participation is covered by the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Security
+
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Do not open a public issue. These skills run inside an agent on code you may not trust, so read the "Safe use" section in that file before auditing third-party repos.
+
+## License
+
+[MIT](LICENSE)
