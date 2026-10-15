@@ -110,6 +110,16 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 *-AI-CREATED-CHECK.md
 ```
 
+## SBOM
+
+[`sbom.cdx.json`](sbom.cdx.json) is a CycloneDX 1.6 software bill of materials. The repo has no third-party dependencies, so the SBOM lists each skill and its files with SHA-256 hashes. You can use it to check that an installed copy matches this repo:
+
+```bash
+shasum -a 256 a2b-attack-check/* ai-created-check/*
+```
+
+The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change.
+
 ## Adding a skill
 
 1. Create a folder named after the skill (lowercase, hyphens).

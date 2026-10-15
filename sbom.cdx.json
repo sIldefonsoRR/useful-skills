@@ -1,0 +1,125 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:3b9d4211-4fc7-460d-b229-f1bc327352c2",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-15T15:06:52Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "useful-skills",
+      "name": "useful-skills",
+      "version": "9c33b7e",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@9c33b7edd3ab5782774de6dd55d3bb3976cc37fa",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/sIldefonsoRR/useful-skills"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "skill:a2b-attack-check",
+      "name": "a2b-attack-check",
+      "version": "9c33b7e",
+      "description": "Use when auditing a codebase for Agent-to-Backend (A2B) attack risk - code where LLMs, AI agents, MCP servers, or function/tool calling can reach backend APIs, databases, shells, files, or network. Triggers include \"A2B check\", \"agent security audit\", \"prompt injection to tool call\", \"excessive agency\", \"is my agent safe to ship\".",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@9c33b7edd3ab5782774de6dd55d3bb3976cc37fa#a2b-attack-check",
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "a2b-attack-check/SKILL.md",
+          "name": "a2b-attack-check/SKILL.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "1abc716a10d202d7d18e7988ba38b2acdd283eed948f2cc0d256fedd8684c8c4"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "a2b-attack-check/checks.md",
+          "name": "a2b-attack-check/checks.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "2bbf4e59fb01b71e3b22c4c85c604f6798a28435106566558741969fc4d3fe4e"
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "skill:format",
+          "value": "Agent Skills (SKILL.md)"
+        },
+        {
+          "name": "skill:runtime-requirements",
+          "value": "git, grep, date (host-provided, not bundled)"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "skill:ai-created-check",
+      "name": "ai-created-check",
+      "version": "9c33b7e",
+      "description": "Use when asked whether code, docs, or files in a repository were written or modified with AI assistance (Claude, Copilot, Cursor, ChatGPT, Codex, Gemini, aider, Devin, etc.), or for an AI-usage / AI-provenance / AI-generated-code audit of a codebase or its git history.",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@9c33b7edd3ab5782774de6dd55d3bb3976cc37fa#ai-created-check",
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "ai-created-check/SKILL.md",
+          "name": "ai-created-check/SKILL.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "a331f05c310c61d4bd51b0cdcd9a642328b9b0ed1ea4cf58b187538c68cd7c27"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "ai-created-check/signals.md",
+          "name": "ai-created-check/signals.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "5ca053aba5baaf96eb41b4065fcec60fbd434136840aff67b58b81b6eb35d720"
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "skill:format",
+          "value": "Agent Skills (SKILL.md)"
+        },
+        {
+          "name": "skill:runtime-requirements",
+          "value": "git, grep, date (host-provided, not bundled)"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "useful-skills",
+      "dependsOn": [
+        "skill:a2b-attack-check",
+        "skill:ai-created-check"
+      ]
+    },
+    {
+      "ref": "skill:a2b-attack-check",
+      "dependsOn": []
+    },
+    {
+      "ref": "skill:ai-created-check",
+      "dependsOn": []
+    }
+  ]
+}
