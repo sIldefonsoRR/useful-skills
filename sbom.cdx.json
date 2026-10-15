@@ -1,16 +1,16 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:396ec684-c18c-462d-8d38-98b31321cfe9",
+  "serialNumber": "urn:uuid:bb6d676f-4086-4778-844d-f02ffc95855f",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-15T15:15:09Z",
+    "timestamp": "2026-10-15T15:28:04Z",
     "component": {
       "type": "application",
       "bom-ref": "useful-skills",
       "name": "useful-skills",
-      "version": "15a0c9e",
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@15a0c9eda8d7ee2a6f56310383dc44aa51c76a54",
+      "version": "28dbe12",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612",
       "licenses": [
         {
           "license": {
@@ -31,7 +31,7 @@
       "type": "application",
       "bom-ref": "skill:a2b-attack-check",
       "name": "a2b-attack-check",
-      "version": "15a0c9e",
+      "version": "28dbe12",
       "description": "Use when auditing a codebase for Agent-to-Backend (A2B) attack risk - code where LLMs, AI agents, MCP servers, or function/tool calling can reach backend APIs, databases, shells, files, or network. Triggers include \"A2B check\", \"agent security audit\", \"prompt injection to tool call\", \"excessive agency\", \"is my agent safe to ship\".",
       "licenses": [
         {
@@ -40,7 +40,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@15a0c9eda8d7ee2a6f56310383dc44aa51c76a54#a2b-attack-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612#a2b-attack-check",
       "components": [
         {
           "type": "file",
@@ -80,7 +80,7 @@
       "type": "application",
       "bom-ref": "skill:ai-created-check",
       "name": "ai-created-check",
-      "version": "15a0c9e",
+      "version": "28dbe12",
       "description": "Use when asked whether code, docs, or files in a repository were written or modified with AI assistance (Claude, Copilot, Cursor, ChatGPT, Codex, Gemini, aider, Devin, etc.), or for an AI-usage / AI-provenance / AI-generated-code audit of a codebase or its git history.",
       "licenses": [
         {
@@ -89,7 +89,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@15a0c9eda8d7ee2a6f56310383dc44aa51c76a54#ai-created-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612#ai-created-check",
       "components": [
         {
           "type": "file",

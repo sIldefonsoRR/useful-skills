@@ -54,5 +54,5 @@ There is no test suite. Test each skill change like this:
 - [ ] Tested against a fixture as described above
 - [ ] `README.md` updated: the Skills table, a section on the skill, and the Report files section if the skill writes a report
 - [ ] `.gitignore` updated with the report pattern, if any
-- [ ] `sbom.cdx.json` regenerated if skill files changed
+- [ ] `sbom.cdx.json` regenerated with `python3 _scripts/generate_sbom.py` if skill files changed
 - [ ] Commits are focused, and messages explain why

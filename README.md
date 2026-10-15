@@ -118,7 +118,13 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 shasum -a 256 a2b-attack-check/* ai-created-check/*
 ```
 
-The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change.
+The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change:
+
+```bash
+python3 _scripts/generate_sbom.py
+```
+
+The generator uses only the Python standard library and git. Every top-level folder that contains a `SKILL.md` is included, so new skills are picked up automatically.
 
 ## Contributing
 
