@@ -8,6 +8,7 @@ A collection of useful skills for Claude Code. Each skill lives in its own folde
 |---|---|
 | [a2b-attack-check](a2b-attack-check/) | Audits a codebase for Agent-to-Backend (A2B) attack risks and writes a dated report. |
 | [ai-created-check](ai-created-check/) | Checks code, docs, and git history for evidence that files were created or updated with AI tools, and writes a dated report. |
+| [core-repo-files-check](core-repo-files-check/) | Checks that a repo has its core files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), explains each one, and writes a dated report. |
 
 ## Install
 
@@ -100,6 +101,42 @@ Most AI-assisted code leaves no trace, so this check can only show that AI was u
 
 See [signals.md](ai-created-check/signals.md) for every signal and the commands used to find it.
 
+## core-repo-files-check
+
+Checks whether a repo has nine core files, explains what each one is for, and describes what the present ones contain.
+
+**Usage:** in your agent, from the repo you want to check:
+
+```
+Run a core repo files check on this repo
+```
+
+**Output:** `YYYY-MM-DD-CORE-REPO-FILES-CHECK.md` in the target repo root. It contains:
+- a verdict (`ESSENTIAL FILES MISSING`, `GAPS FOUND`, or `ALL CORE FILES PRESENT`)
+- a status for each file
+- for each present file: its purpose and a summary of its contents
+- for each missing file: its purpose and why it matters for this repo
+
+The skill only reads your code. It never creates the missing files. The report is the only file it writes.
+
+**Files:**
+
+| ID | File | Tier |
+|---|---|---|
+| F1 | README.md | Essential |
+| F2 | LICENSE | Essential |
+| F3 | .gitignore | Essential |
+| F4 | .env.example | Recommended |
+| F5 | CONTRIBUTING.md | Recommended |
+| F6 | CODE_OF_CONDUCT.md | Recommended |
+| F7 | SECURITY.md | Recommended |
+| F8 | CHANGELOG.md | Recommended |
+| F9 | sbom.cdx.json | Recommended |
+
+**Statuses:** Present, Incomplete (template placeholders left in, or a key item missing), Empty, Missing, and Not applicable (only `.env.example`, when the code reads no environment variables). Files in `.github/` or `docs/`, and common alternate names such as `LICENSE.txt` or `HISTORY.md`, are accepted.
+
+See [files.md](core-repo-files-check/files.md) for each file's purpose, accepted names, and what is checked.
+
 ## Report files
 
 Each check writes its report to the root of the repo it audits, as an untracked file. The skills never change `.gitignore`. To keep reports out of version control, add these lines to the audited repo's `.gitignore`. This repo already ignores them:
@@ -108,6 +145,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 # Skill report outputs
 *-A2B-CHECK.md
 *-AI-CREATED-CHECK.md
+*-CORE-REPO-FILES-CHECK.md
 ```
 
 ## SBOM
@@ -115,7 +153,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 [`sbom.cdx.json`](sbom.cdx.json) is a CycloneDX 1.6 software bill of materials. The repo has no third-party dependencies, so the SBOM lists each skill and its files with SHA-256 hashes. You can use it to check that an installed copy matches this repo:
 
 ```bash
-shasum -a 256 a2b-attack-check/* ai-created-check/*
+shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/*
 ```
 
 The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change:

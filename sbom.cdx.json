@@ -1,16 +1,16 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:bb6d676f-4086-4778-844d-f02ffc95855f",
+  "serialNumber": "urn:uuid:b36e1a18-97e1-4ab5-bbe4-f619b3b37b18",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-15T15:28:04Z",
+    "timestamp": "2026-10-15T15:40:18Z",
     "component": {
       "type": "application",
       "bom-ref": "useful-skills",
       "name": "useful-skills",
-      "version": "28dbe12",
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612",
+      "version": "3694ba7",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@3694ba7f993d0fb30ca0369dcef1fde8b8f7d6c1",
       "licenses": [
         {
           "license": {
@@ -31,7 +31,7 @@
       "type": "application",
       "bom-ref": "skill:a2b-attack-check",
       "name": "a2b-attack-check",
-      "version": "28dbe12",
+      "version": "3694ba7",
       "description": "Use when auditing a codebase for Agent-to-Backend (A2B) attack risk - code where LLMs, AI agents, MCP servers, or function/tool calling can reach backend APIs, databases, shells, files, or network. Triggers include \"A2B check\", \"agent security audit\", \"prompt injection to tool call\", \"excessive agency\", \"is my agent safe to ship\".",
       "licenses": [
         {
@@ -40,7 +40,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612#a2b-attack-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@3694ba7f993d0fb30ca0369dcef1fde8b8f7d6c1#a2b-attack-check",
       "components": [
         {
           "type": "file",
@@ -80,7 +80,7 @@
       "type": "application",
       "bom-ref": "skill:ai-created-check",
       "name": "ai-created-check",
-      "version": "28dbe12",
+      "version": "3694ba7",
       "description": "Use when asked whether code, docs, or files in a repository were written or modified with AI assistance (Claude, Copilot, Cursor, ChatGPT, Codex, Gemini, aider, Devin, etc.), or for an AI-usage / AI-provenance / AI-generated-code audit of a codebase or its git history.",
       "licenses": [
         {
@@ -89,7 +89,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@28dbe12a8a8b9d2bac1e9f452dc8f599a3254612#ai-created-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@3694ba7f993d0fb30ca0369dcef1fde8b8f7d6c1#ai-created-check",
       "components": [
         {
           "type": "file",
@@ -124,6 +124,55 @@
           "value": "git, grep, date (host-provided, not bundled)"
         }
       ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "skill:core-repo-files-check",
+      "name": "core-repo-files-check",
+      "version": "3694ba7",
+      "description": "Use when asked whether a repository has its core project files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), for a repo hygiene, open-source readiness, or community health files check, or when someone asks \"what standard files is this repo missing\".",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@3694ba7f993d0fb30ca0369dcef1fde8b8f7d6c1#core-repo-files-check",
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "core-repo-files-check/SKILL.md",
+          "name": "core-repo-files-check/SKILL.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "a6d60e3d726d1dacc3b849c9c9ecbbd5cd1d0991847cc8529d3296f3915dec74"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "core-repo-files-check/files.md",
+          "name": "core-repo-files-check/files.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "eb230e42368677c268f4c7af7bd09798bca7250c4177c7f05d1a66b63c1fb849"
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "skill:format",
+          "value": "Agent Skills (SKILL.md)"
+        },
+        {
+          "name": "skill:runtime-requirements",
+          "value": "git, grep, date (host-provided, not bundled)"
+        }
+      ]
     }
   ],
   "dependencies": [
@@ -131,7 +180,8 @@
       "ref": "useful-skills",
       "dependsOn": [
         "skill:a2b-attack-check",
-        "skill:ai-created-check"
+        "skill:ai-created-check",
+        "skill:core-repo-files-check"
       ]
     },
     {
@@ -140,6 +190,10 @@
     },
     {
       "ref": "skill:ai-created-check",
+      "dependsOn": []
+    },
+    {
+      "ref": "skill:core-repo-files-check",
       "dependsOn": []
     }
   ]
