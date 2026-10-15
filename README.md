@@ -9,6 +9,7 @@ A collection of useful skills for Claude Code. Each skill lives in its own folde
 | [a2b-attack-check](a2b-attack-check/) | Audits a codebase for Agent-to-Backend (A2B) attack risks and writes a dated report. |
 | [ai-created-check](ai-created-check/) | Checks code, docs, and git history for evidence that files were created or updated with AI tools, and writes a dated report. |
 | [core-repo-files-check](core-repo-files-check/) | Checks that a repo has its core files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), explains each one, and writes a dated report. |
+| [essential-automation-check](essential-automation-check/) | Checks that a repo has its CI/CD and test automation files (workflows, Dependabot, Makefile, issue and PR templates, labeler), checks they work, and writes a dated report. |
 
 ## Install
 
@@ -137,6 +138,40 @@ The skill only reads your code. It never creates the missing files. The report i
 
 See [files.md](core-repo-files-check/files.md) for each file's purpose, accepted names, and what is checked.
 
+## essential-automation-check
+
+Checks whether a repo has six CI/CD and test automation files, explains what each one is for, and checks that the present ones actually work. For example, a workflow must run a build, test, or lint command on push or pull request. Dependabot must cover every ecosystem the repo uses.
+
+**Usage:** in your agent, from the repo you want to check:
+
+```
+Run an essential automation check on this repo
+```
+
+**Output:** `YYYY-MM-DD-ESSENTIAL-AUTOMATION-CHECK.md` in the target repo root. It contains:
+- a verdict (`ESSENTIAL AUTOMATION MISSING`, `GAPS FOUND`, or `ALL AUTOMATION PRESENT`)
+- the ecosystems detected in the repo
+- a status for each file
+- for each present file: its purpose, what it does, and any problems (including risky `pull_request_target` workflows)
+- for each missing file: its purpose and why it matters for this repo
+
+The skill only reads your code. It never runs workflows or `make`, and never creates the missing files. The report is the only file it writes.
+
+**Files:**
+
+| ID | File | Tier |
+|---|---|---|
+| C1 | .github/workflows/*.yml | Essential |
+| C2 | Makefile | Recommended |
+| C3 | .github/dependabot.yml | Essential |
+| C4 | .github/ISSUE_TEMPLATE/*.yml | Recommended |
+| C5 | .github/PULL_REQUEST_TEMPLATE.md | Recommended |
+| C6 | .github/labeler.yml | Recommended |
+
+**Statuses:** Present, Incomplete (the file exists but does not do its job, e.g. a Makefile missing a target the CI calls), Empty, Missing, and Not applicable (only Dependabot, when the repo uses no package ecosystem). Common alternatives are accepted: GitLab CI, CircleCI, Jenkins and others for C1; Renovate for C3; `justfile` or `Taskfile.yml` for C2; Markdown issue templates for C4.
+
+See [files.md](essential-automation-check/files.md) for each file's purpose, accepted names, and what is checked.
+
 ## Report files
 
 Each check writes its report to the root of the repo it audits, as an untracked file. The skills never change `.gitignore`. To keep reports out of version control, add these lines to the audited repo's `.gitignore`. This repo already ignores them:
@@ -146,6 +181,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 *-A2B-CHECK.md
 *-AI-CREATED-CHECK.md
 *-CORE-REPO-FILES-CHECK.md
+*-ESSENTIAL-AUTOMATION-CHECK.md
 ```
 
 ## SBOM
@@ -153,7 +189,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 [`sbom.cdx.json`](sbom.cdx.json) is a CycloneDX 1.6 software bill of materials. The repo has no third-party dependencies, so the SBOM lists each skill and its files with SHA-256 hashes. You can use it to check that an installed copy matches this repo:
 
 ```bash
-shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/*
+shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/* essential-automation-check/*
 ```
 
 The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change:

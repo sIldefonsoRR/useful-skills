@@ -11,7 +11,7 @@ A collection of agent skills in the open Agent Skills format. There is no build,
 One folder per skill, named in lowercase with hyphens:
 
 - `SKILL.md`: frontmatter (`name`, `description`), then Overview, Workflow, rating rules, an exact Report Template, and Common Mistakes. `description` states only when to use the skill (it starts "Use when...") and does not summarize the workflow.
-- One reference file holding the detailed catalog with search commands (`checks.md` in `a2b-attack-check`, `signals.md` in `ai-created-check`, `files.md` in `core-repo-files-check`). `SKILL.md` refers to entries by ID (A0–A12, H1–H5 / S1–S5 / R1, F1–F9); keep the IDs consistent between both files and the README.
+- One reference file holding the detailed catalog with search commands (`checks.md` in `a2b-attack-check`, `signals.md` in `ai-created-check`, `files.md` in `core-repo-files-check` and `essential-automation-check`). `SKILL.md` refers to entries by ID (A0–A12, H1–H5 / S1–S5 / R1, F1–F9, C1–C6); keep the IDs consistent between both files and the README.
 
 ## Conventions shared by the audit skills
 
