@@ -11,6 +11,7 @@ A collection of useful skills for Claude Code. Each skill lives in its own folde
 | [core-repo-files-check](core-repo-files-check/) | Checks that a repo has its core files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), explains each one, and writes a dated report. |
 | [essential-automation-check](essential-automation-check/) | Checks that a repo has its CI/CD and test automation files (workflows, Dependabot, Makefile, issue and PR templates, labeler), checks they work, and writes a dated report. |
 | [owasp-code-check](owasp-code-check/) | Reviews source code against the OWASP Top 10:2025, ranks each risk, and writes a dated report with evidence and prioritized next actions. |
+| [obfuscation-check](obfuscation-check/) | Detects obfuscated, packed, or deliberately unreadable Python (tool markers, encoded payloads, mangled identifiers, bytecode-only modules) and writes a dated report. |
 
 ## Install
 
@@ -221,6 +222,48 @@ The skill only reads your code. It never runs the app, tests, or dependency scan
 
 See [checks.md](owasp-code-check/checks.md) for the search patterns and pass/fail criteria. Agent-to-backend risks in LLM code are covered by [a2b-attack-check](#a2b-attack-check).
 
+## obfuscation-check
+
+Detects Python source that has been obfuscated, packed, or made deliberately hard to read or analyze. Obfuscated code in a repo is often there to hide malware from review, so this check flags and locates it. It is read-only and **never runs, imports, decodes, or deobfuscates** the target: it reports the obfuscation, it does not reverse it.
+
+**Usage:** in your agent, from the repo you want to check:
+
+```
+Run an obfuscation check on this repo
+```
+
+**Output:** `YYYY-MM-DD-OBFUSCATION-CHECK.md` in the target repo root. It contains:
+- a verdict (`OBFUSCATION CONFIRMED`, `LIKELY OBFUSCATION`, `POSSIBLE OBFUSCATION`, `NO EVIDENCE FOUND`, or `NOT APPLICABLE`)
+- a table of tools and artifacts detected
+- a level for each flagged file, with the evidence quoted at `file:line`
+- a handling note when anything is Confirmed or Likely (review or quarantine before running; never execute it to inspect it)
+
+The skill only reads your code. The report is the only file it writes.
+
+**Levels:**
+
+| Level | Requires |
+|---|---|
+| Confirmed | A hard signal: an obfuscator/packer tool marker (B1), an encoded blob that reaches `exec`/`eval`/`compile` (B2), a bytecode-only module (B3), or a freezer artifact replacing source (B4) |
+| Likely | No hard signal, but 3+ soft signals across 2+ categories (B5–B8), each with a quoted example |
+| Possible | 1–2 soft signals, or 3+ in only one category |
+| No evidence | Nothing found. This never means "clean" or "safe" |
+
+**Signals:**
+
+| ID | Signal | Kind |
+|---|---|---|
+| B1 | Obfuscation / packer tool markers | Hard |
+| B2 | Encoded or compressed blob executed at runtime | Hard |
+| B3 | Bytecode-only module shipped without source | Hard |
+| B4 | Freezer / packer artifacts replacing source | Hard |
+| B5 | Lexical mangling (non-semantic or hex-style identifiers) | Soft |
+| B6 | Constant codification (`\x` blobs, `chr()` chains, arithmetic constants) | Soft |
+| B7 | Control-flow flattening (dispatch loop over a state variable) | Soft |
+| B8 | Pervasive dynamic/indirect execution from constructed strings | Soft |
+
+Minified code, code generators, and some legitimate libraries can trip the soft signals, so detection is heuristic; see [signals.md](obfuscation-check/signals.md) for the patterns and what each requires. Vendored and build output (`site-packages`, `*.min.*`, `dist/`) is excluded.
+
 ## Report files
 
 Each check writes its report to the root of the repo it audits, as an untracked file. The skills never change `.gitignore`. To keep reports out of version control, add these lines to the audited repo's `.gitignore`. This repo already ignores them:
@@ -232,6 +275,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 *-CORE-REPO-FILES-CHECK.md
 *-ESSENTIAL-AUTOMATION-CHECK.md
 *-OWASP-CHECK.md
+*-OBFUSCATION-CHECK.md
 ```
 
 ## SBOM
@@ -239,7 +283,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 [`sbom.cdx.json`](sbom.cdx.json) is a CycloneDX 1.6 software bill of materials. The repo has no third-party dependencies, so the SBOM lists each skill and its files with SHA-256 hashes. You can use it to check that an installed copy matches this repo:
 
 ```bash
-shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/* essential-automation-check/* owasp-code-check/*
+shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/* essential-automation-check/* owasp-code-check/* obfuscation-check/*
 ```
 
 The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change:
