@@ -14,6 +14,7 @@ import json
 import pathlib
 import re
 import subprocess
+import sys
 import uuid
 
 REPO = "sIldefonsoRR/useful-skills"
@@ -27,7 +28,10 @@ def git(*args):
 
 def skill_component(skill, files, sha):
     md = (ROOT / skill / "SKILL.md").read_text(encoding="utf-8")
-    desc = re.search(r"^description:\s*(.+)$", md, re.M).group(1).strip()
+    match = re.search(r"^description:\s*(.+)$", md, re.M)
+    if not match:
+        sys.exit(f"{skill}/SKILL.md: missing 'description:' line in frontmatter")
+    desc = match.group(1).strip()
     return {
         "type": "application",
         "bom-ref": f"skill:{skill}",
