@@ -1,6 +1,6 @@
 # useful-skills
 
-A collection of useful skills for Claude Code. Each skill lives in its own folder with a `SKILL.md` and any supporting files.
+A collection of read-only audit skills for Claude Code. The six skills check a repository for a specific class of issue — agent-to-backend attack paths, AI-authored files, missing core files, missing CI/CD automation, OWASP Top 10 risks, and obfuscated Python — and each writes a dated report at the audited repo's root without changing its code. Each skill lives in its own folder with a `SKILL.md` and any supporting files.
 
 ## Skills
 
