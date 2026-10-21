@@ -10,6 +10,7 @@ A collection of useful skills for Claude Code. Each skill lives in its own folde
 | [ai-created-check](ai-created-check/) | Checks code, docs, and git history for evidence that files were created or updated with AI tools, and writes a dated report. |
 | [core-repo-files-check](core-repo-files-check/) | Checks that a repo has its core files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), explains each one, and writes a dated report. |
 | [essential-automation-check](essential-automation-check/) | Checks that a repo has its CI/CD and test automation files (workflows, Dependabot, Makefile, issue and PR templates, labeler), checks they work, and writes a dated report. |
+| [owasp-code-check](owasp-code-check/) | Reviews source code against the OWASP Top 10:2025, ranks each risk, and writes a dated report with evidence and prioritized next actions. |
 
 ## Install
 
@@ -172,6 +173,54 @@ The skill only reads your code. It never runs workflows or `make`, and never cre
 
 See [files.md](essential-automation-check/files.md) for each file's purpose, accepted names, and what is checked.
 
+## owasp-code-check
+
+Reviews application source code against the OWASP Top 10:2025. Each finding traces untrusted input to a sensitive operation, or shows a missing control, and quotes the code as evidence.
+
+**Usage:** in your agent, from the repo you want to audit:
+
+```
+Run an OWASP code check on this repo
+```
+
+**Output:** `YYYY-MM-DD-OWASP-CHECK.md` in the target repo root. It contains:
+- a verdict (`CRITICAL RISK` to `NO ISSUES FOUND`, or `NOT APPLICABLE`)
+- a count of findings by risk rank
+- an inventory of the application surface
+- each finding, with `file:line`, the code excerpt, the source-to-sink path, impact, and mitigation
+- a prioritized Next Actions table
+- a pass/fail table for every check
+
+The skill only reads your code. It never runs the app, tests, or dependency scanners. The report is the only file it writes.
+
+**Risk ranks and priorities:**
+
+| Rank | Priority | Examples |
+|---|---|---|
+| Critical | P0: fix before the next deploy | Unauthenticated injection or RCE, auth bypass, access to other users' data, committed production secret |
+| High | P1: fix in the current sprint | XSS, SSRF, path traversal, weak password hashing, missing authz on writes, fail-open checks |
+| Medium | P2: next release | Weak crypto or randomness, no login rate limit, debug mode or stack traces in prod, open redirect |
+| Low | P3: hardening backlog | Missing security headers or cookie flags, no lockfile, unpinned CI actions |
+| Info | none | Hardening notes, and anything found only in tests or examples |
+
+**Checks:**
+
+| ID | OWASP 2025 | Check |
+|---|---|---|
+| O0 | — | Application surface inventory |
+| O1 | A01 | Broken Access Control |
+| O2 | A02 | Security Misconfiguration |
+| O3 | A03 | Software Supply Chain Failures |
+| O4 | A04 | Cryptographic Failures |
+| O5 | A05 | Injection |
+| O6 | A06 | Insecure Design |
+| O7 | A07 | Authentication Failures |
+| O8 | A08 | Software or Data Integrity Failures |
+| O9 | A09 | Security Logging and Alerting Failures |
+| O10 | A10 | Mishandling of Exceptional Conditions |
+
+See [checks.md](owasp-code-check/checks.md) for the search patterns and pass/fail criteria. Agent-to-backend risks in LLM code are covered by [a2b-attack-check](#a2b-attack-check).
+
 ## Report files
 
 Each check writes its report to the root of the repo it audits, as an untracked file. The skills never change `.gitignore`. To keep reports out of version control, add these lines to the audited repo's `.gitignore`. This repo already ignores them:
@@ -182,6 +231,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 *-AI-CREATED-CHECK.md
 *-CORE-REPO-FILES-CHECK.md
 *-ESSENTIAL-AUTOMATION-CHECK.md
+*-OWASP-CHECK.md
 ```
 
 ## SBOM
@@ -189,7 +239,7 @@ Each check writes its report to the root of the repo it audits, as an untracked 
 [`sbom.cdx.json`](sbom.cdx.json) is a CycloneDX 1.6 software bill of materials. The repo has no third-party dependencies, so the SBOM lists each skill and its files with SHA-256 hashes. You can use it to check that an installed copy matches this repo:
 
 ```bash
-shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/* essential-automation-check/*
+shasum -a 256 a2b-attack-check/* ai-created-check/* core-repo-files-check/* essential-automation-check/* owasp-code-check/*
 ```
 
 The skills use `git`, `grep`, and `date` from the host. These tools are not bundled. Regenerate the SBOM whenever a skill's files change:

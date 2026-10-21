@@ -1,16 +1,16 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:0901894a-4b12-438c-8032-2446e890dc64",
+  "serialNumber": "urn:uuid:887030a1-7fc4-4b26-b7b4-80151e43270c",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-15T16:03:02Z",
+    "timestamp": "2026-10-19T22:52:30Z",
     "component": {
       "type": "application",
       "bom-ref": "useful-skills",
       "name": "useful-skills",
-      "version": "c2a99b4",
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@c2a99b449bb4d35eacca87090f6846a56ee1f74f",
+      "version": "be2cfee",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189",
       "licenses": [
         {
           "license": {
@@ -31,7 +31,7 @@
       "type": "application",
       "bom-ref": "skill:a2b-attack-check",
       "name": "a2b-attack-check",
-      "version": "c2a99b4",
+      "version": "be2cfee",
       "description": "Use when auditing a codebase for Agent-to-Backend (A2B) attack risk - code where LLMs, AI agents, MCP servers, or function/tool calling can reach backend APIs, databases, shells, files, or network. Triggers include \"A2B check\", \"agent security audit\", \"prompt injection to tool call\", \"excessive agency\", \"is my agent safe to ship\".",
       "licenses": [
         {
@@ -40,7 +40,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@c2a99b449bb4d35eacca87090f6846a56ee1f74f#a2b-attack-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189#a2b-attack-check",
       "components": [
         {
           "type": "file",
@@ -80,7 +80,7 @@
       "type": "application",
       "bom-ref": "skill:ai-created-check",
       "name": "ai-created-check",
-      "version": "c2a99b4",
+      "version": "be2cfee",
       "description": "Use when asked whether code, docs, or files in a repository were written or modified with AI assistance (Claude, Copilot, Cursor, ChatGPT, Codex, Gemini, aider, Devin, etc.), or for an AI-usage / AI-provenance / AI-generated-code audit of a codebase or its git history.",
       "licenses": [
         {
@@ -89,7 +89,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@c2a99b449bb4d35eacca87090f6846a56ee1f74f#ai-created-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189#ai-created-check",
       "components": [
         {
           "type": "file",
@@ -129,7 +129,7 @@
       "type": "application",
       "bom-ref": "skill:core-repo-files-check",
       "name": "core-repo-files-check",
-      "version": "c2a99b4",
+      "version": "be2cfee",
       "description": "Use when asked whether a repository has its core project files (README, LICENSE, .gitignore, .env.example, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SBOM), for a repo hygiene, open-source readiness, or community health files check, or when someone asks \"what standard files is this repo missing\".",
       "licenses": [
         {
@@ -138,7 +138,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@c2a99b449bb4d35eacca87090f6846a56ee1f74f#core-repo-files-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189#core-repo-files-check",
       "components": [
         {
           "type": "file",
@@ -178,7 +178,7 @@
       "type": "application",
       "bom-ref": "skill:essential-automation-check",
       "name": "essential-automation-check",
-      "version": "c2a99b4",
+      "version": "be2cfee",
       "description": "Use when asked whether a repository has its CI/CD and test automation files (GitHub Actions workflows, Dependabot, Makefile, issue templates, pull request template, labeler), for a CI readiness or repo automation audit, or when someone asks \"what automation is this repo missing\".",
       "licenses": [
         {
@@ -187,7 +187,7 @@
           }
         }
       ],
-      "purl": "pkg:github/sIldefonsoRR/useful-skills@c2a99b449bb4d35eacca87090f6846a56ee1f74f#essential-automation-check",
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189#essential-automation-check",
       "components": [
         {
           "type": "file",
@@ -222,6 +222,55 @@
           "value": "git, grep, date (host-provided, not bundled)"
         }
       ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "skill:owasp-code-check",
+      "name": "owasp-code-check",
+      "version": "be2cfee",
+      "description": "Use when auditing application source code against the OWASP Top 10 (web app security review, secure code review, \"is this code OWASP compliant\", \"check for injection / XSS / broken access control\", pre-release security audit), or when someone asks which OWASP risks a codebase has and how to fix them.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:github/sIldefonsoRR/useful-skills@be2cfee76e0f82f37d31014a256443b28d4bb189#owasp-code-check",
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "owasp-code-check/SKILL.md",
+          "name": "owasp-code-check/SKILL.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "acef5bceaf74346457c12be69671c15a6c8d5a46341aa2cf9bae186d43d98106"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "owasp-code-check/checks.md",
+          "name": "owasp-code-check/checks.md",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "ab5b232b7c2deaf79056a411b615c81ef05f54f643140d0efb7961dfeb21315c"
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "skill:format",
+          "value": "Agent Skills (SKILL.md)"
+        },
+        {
+          "name": "skill:runtime-requirements",
+          "value": "git, grep, date (host-provided, not bundled)"
+        }
+      ]
     }
   ],
   "dependencies": [
@@ -231,7 +280,8 @@
         "skill:a2b-attack-check",
         "skill:ai-created-check",
         "skill:core-repo-files-check",
-        "skill:essential-automation-check"
+        "skill:essential-automation-check",
+        "skill:owasp-code-check"
       ]
     },
     {
@@ -248,6 +298,10 @@
     },
     {
       "ref": "skill:essential-automation-check",
+      "dependsOn": []
+    },
+    {
+      "ref": "skill:owasp-code-check",
       "dependsOn": []
     }
   ]
